@@ -479,7 +479,7 @@ function App() {
 
         <section className="contact-section" id="contact">
 
-          <Sparkles className="contact-sparkle" />
+          {/* <Sparkles className="contact-sparkle" /> */}
 
           <span className="contact-small">
             HAVE A PROJECT IN MIND?
@@ -491,7 +491,10 @@ function App() {
             SOMETHING.
           </h2>
 
-          <button className="contact-button">
+          <button className="contact-button" onClick={()=>{
+            window.location.href = "/contact";
+            
+          }}>
 
             <span>
               GET IN TOUCH
