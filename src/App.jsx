@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -15,8 +16,13 @@ import FloatingNav from "./components/FloatingNav";
 import CustomCursor from "./components/CustomCursor";
 import ProjectCard from "./components/ProjectCard";
 
+
 function App() {
-  const [entered, setEntered] = useState(false);
+  const location = useLocation();
+
+  const [entered, setEntered] = useState(
+    location.state?.skipIntro === true
+  );
 
   useEffect(() => {
     document.body.style.overflow = entered ? "auto" : "hidden";
@@ -492,7 +498,7 @@ function App() {
           </h2>
 
           <button className="contact-button" onClick={()=>{
-            window.location.href = "/contact";
+            window.location.href = "/contact"; // Redirect to the contact page
             
           }}>
 
