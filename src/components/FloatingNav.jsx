@@ -1,83 +1,147 @@
 import { useState } from "react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+} from "lucide-react";
+import {
+  motion,
+  AnimatePresence,
+} from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 function FloatingNav() {
   const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
 
-  const scrollToSection = (id) => {
-    // If we're already on the landing page
+  const goHomeSection = (id) => {
     if (window.location.pathname === "/") {
       document.getElementById(id)?.scrollIntoView({
         behavior: "smooth",
       });
     } else {
-      // Go back to landing page first
-      navigate("/");
-
-      // Wait for the landing page to render
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({
-          behavior: "smooth",
-        });
-      }, 100);
+      navigate("/", {
+        state: {
+          skipIntro: true,
+          scrollTo: id,
+        },
+      });
     }
 
     setOpen(false);
   };
 
-  const goToContact = () => {
+  const goHome = () => {
+    navigate("/", {
+      state: {
+        skipIntro: true,
+      },
+    });
+
+    setOpen(false);
+  };
+
+  const goWork = () => {
+    navigate("/work");
+    setOpen(false);
+  };
+
+  const goContact = () => {
     navigate("/contact");
     setOpen(false);
   };
 
   return (
-    <header className="floating-navigation">
-
-      {/* LOGO */}
-      <button
+    <motion.header
+      className="floating-navigation"
+      initial={{
+        opacity: 0,
+        y: -35,
+        scale: 0.96,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      }}
+      transition={{
+        duration: 0.8,
+        delay: 0.25,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      <motion.button
         className="nav-brand"
-        onClick={() => scrollToSection("home")}
+        onClick={goHome}
+        whileHover={{
+          scale: 1.04,
+        }}
+        whileTap={{
+          scale: 0.96,
+        }}
       >
-        <span className="nav-brand-mark">K</span>
+        <span className="nav-logo">
+          <img
+            src="/assets/logo.png"
+            alt="Kritika Rokka"
+          />
+        </span>
+
         <span>KRITIKA</span>
-      </button>
+      </motion.button>
 
-      {/* NAVIGATION */}
-      <nav className={open ? "nav-menu open" : "nav-menu"}>
-
-        <button onClick={() => scrollToSection("home")}>
+      <nav
+        className={
+          open
+            ? "nav-menu open"
+            : "nav-menu"
+        }
+      >
+        <button onClick={goHome}>
           HOME
         </button>
 
-        <button onClick={() => scrollToSection("work")}>
+        <button onClick={goWork}>
           WORK
         </button>
 
-        <button onClick={() => scrollToSection("about")}>
+        <button
+          onClick={() =>
+            goHomeSection("about")
+          }
+        >
           ABOUT
         </button>
 
-        <button onClick={() => scrollToSection("experience")}>
+        <button
+          onClick={() =>
+            goHomeSection("experience")
+          }
+        >
           EXPERIENCE
         </button>
-
       </nav>
 
-      {/* LET'S TALK */}
-      <button
+      <motion.button
         className="nav-talk"
-        onClick={goToContact}
+        onClick={goContact}
+        whileHover={{
+          y: -3,
+        }}
+        whileTap={{
+          scale: 0.96,
+        }}
       >
         <span>LET'S TALK</span>
         <ArrowUpRight size={15} />
-      </button>
+      </motion.button>
 
-      {/* MOBILE MENU */}
       <button
         className="nav-mobile"
-        onClick={() => setOpen(!open)}
+        onClick={() =>
+          setOpen(!open)
+        }
         aria-label="Toggle navigation"
       >
         {open ? (
@@ -87,7 +151,54 @@ function FloatingNav() {
         )}
       </button>
 
-    </header>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="mobile-nav-panel"
+            initial={{
+              opacity: 0,
+              y: -15,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -15,
+            }}
+          >
+            <button onClick={goHome}>
+              HOME
+            </button>
+
+            <button onClick={goWork}>
+              WORK
+            </button>
+
+            <button
+              onClick={() =>
+                goHomeSection("about")
+              }
+            >
+              ABOUT
+            </button>
+
+            <button
+              onClick={() =>
+                goHomeSection("experience")
+              }
+            >
+              EXPERIENCE
+            </button>
+
+            <button onClick={goContact}>
+              LET'S TALK ↗
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }
 

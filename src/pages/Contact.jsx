@@ -1,50 +1,92 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import emailjs from "@emailjs/browser";
+import {
+  useState,
+} from "react";
+
 import {
   ArrowLeft,
   ArrowUpRight,
   Mail
 } from "lucide-react";
-import "./Contact.css";
+
+import {
+  useNavigate,
+} from "react-router-dom";
+
+import emailjs
+  from "@emailjs/browser";
+
+import "../Contact.css";
+
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
 
-  const [status, setStatus] = useState("");
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
-  const handleChange = (event) => {
+
+  const [formData, setFormData] =
+    useState({
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    });
+
+
+  const [status, setStatus] =
+    useState("");
+
+
+  const handleChange = (
+    event
+  ) => {
+
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value,
+
+      [event.target.name]:
+        event.target.value,
     });
+
   };
 
-  const handleSubmit = async (event) => {
+
+  const handleSubmit = async (
+    event
+  ) => {
+
     event.preventDefault();
 
     setStatus("sending");
 
     try {
+
       await emailjs.send(
+
         "YOUR_SERVICE_ID",
+
         "YOUR_TEMPLATE_ID",
+
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
+          from_name:
+            formData.name,
+
+          from_email:
+            formData.email,
+
+          subject:
+            formData.subject,
+
+          message:
+            formData.message,
         },
+
         "YOUR_PUBLIC_KEY"
       );
 
+
       setStatus("success");
+
 
       setFormData({
         name: "",
@@ -52,104 +94,180 @@ function Contact() {
         subject: "",
         message: "",
       });
+
     } catch (error) {
+
       console.error(error);
+
       setStatus("error");
     }
   };
 
+
   return (
     <main className="contact-page">
 
-      {/* BACK BUTTON */}
-      {/* <button
-        className="contact-back"
-        onClick={() => window.history.back()}
-      >
-        <ArrowLeft size={18} />
-        <span>BACK</span>
-      </button> */}
+      {/* TOP */}
 
-      <button
-        className="contact-back"
-        onClick={() =>
-        navigate("/", {
-        state: {
-        skipIntro: true,
-        },
-        })
-        }
-        >
-        <ArrowLeft size={18} />
-        <span>BACK</span>
-      </button>
-
-      {/* TOP LABEL */}
       <div className="contact-top">
-        <span>KR / 2026</span>
-        <span>CONTACT</span>
+
+        <button
+          className="contact-back"
+
+          onClick={() =>
+            navigate("/", {
+              state: {
+                skipIntro: true,
+              },
+            })
+          }
+        >
+
+          <ArrowLeft
+            size={17}
+          />
+
+          <span>
+            BACK
+          </span>
+
+        </button>
+
+
+        <div className="contact-top-meta">
+
+          <span>
+            KR / 2026
+          </span>
+
+          <span>
+            CONTACT
+          </span>
+
+        </div>
+
       </div>
 
+
       {/* HERO */}
+
       <section className="contact-hero">
 
         <div className="contact-eyebrow">
-          <span className="contact-dot"></span>
+
+          <span className="contact-dot" />
+
           HAVE A PROJECT IN MIND?
+
         </div>
 
+
         <h1>
+
           Let's make
           <br />
-          something <em>great.</em>
+          something
+          <em> great.</em>
+
         </h1>
 
+
         <p>
-          Whether you have a project, an idea, or simply want to
-          say hello — I'd love to hear from you.
+
+          Whether you have a project,
+          an idea, or simply want to
+          say hello — I'd love to hear
+          from you.
+
         </p>
 
       </section>
 
-      {/* CONTACT CONTENT */}
+
+      {/* CONTENT */}
+
       <section className="contact-content">
 
-        {/* LEFT SIDE */}
         <div className="contact-info">
 
           <div className="contact-info-block">
-            <span className="contact-label">EMAIL</span>
 
-            <a href="mailto:rokkakritika@gmail.com">
-              rokkakritika@gmail.com
-              <ArrowUpRight size={16} />
+            <span className="contact-label">
+              EMAIL
+            </span>
+
+            <a
+              href="mailto:your@email.com"
+            >
+              your@email.com
+
+              <ArrowUpRight
+                size={16}
+              />
             </a>
+
           </div>
 
+
           <div className="contact-info-block">
-            <span className="contact-label">SOCIALS</span>
 
-            <div className="contact-socials">
+            <span className="contact-label">
+              SOCIALS
+            </span>
 
-            </div>
+            {/* <div className="contact-socials">
+
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Instagram size={17} />
+                Instagram
+              </a>
+
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Linkedin size={17} />
+                LinkedIn
+              </a>
+
+            </div> */}
+
           </div>
 
+
           <div className="contact-info-block">
-            <span className="contact-label">BASED IN</span>
-            <p>Kathmandu, Nepal</p>
+
+            <span className="contact-label">
+              BASED IN
+            </span>
+
+            <p>
+              Kathmandu, Nepal
+            </p>
+
           </div>
 
         </div>
 
+
         {/* FORM */}
+
         <form
           className="contact-form"
-          onSubmit={handleSubmit}
+          onSubmit={
+            handleSubmit
+          }
         >
 
           <div className="form-row">
 
             <div className="form-field">
+
               <label htmlFor="name">
                 YOUR NAME
               </label>
@@ -159,13 +277,20 @@ function Contact() {
                 name="name"
                 type="text"
                 placeholder="John Doe"
-                value={formData.name}
-                onChange={handleChange}
+                value={
+                  formData.name
+                }
+                onChange={
+                  handleChange
+                }
                 required
               />
+
             </div>
 
+
             <div className="form-field">
+
               <label htmlFor="email">
                 YOUR EMAIL
               </label>
@@ -175,15 +300,22 @@ function Contact() {
                 name="email"
                 type="email"
                 placeholder="john@example.com"
-                value={formData.email}
-                onChange={handleChange}
+                value={
+                  formData.email
+                }
+                onChange={
+                  handleChange
+                }
                 required
               />
+
             </div>
 
           </div>
 
+
           <div className="form-field">
+
             <label htmlFor="subject">
               SUBJECT
             </label>
@@ -193,13 +325,20 @@ function Contact() {
               name="subject"
               type="text"
               placeholder="Let's work together"
-              value={formData.subject}
-              onChange={handleChange}
+              value={
+                formData.subject
+              }
+              onChange={
+                handleChange
+              }
               required
             />
+
           </div>
 
+
           <div className="form-field">
+
             <label htmlFor="message">
               MESSAGE
             </label>
@@ -209,53 +348,89 @@ function Contact() {
               name="message"
               rows="6"
               placeholder="Tell me a little about your project..."
-              value={formData.message}
-              onChange={handleChange}
+              value={
+                formData.message
+              }
+              onChange={
+                handleChange
+              }
               required
             />
+
           </div>
+
 
           <button
             type="submit"
             className="send-button"
-            disabled={status === "sending"}
+            disabled={
+              status === "sending"
+            }
           >
+
             <span>
+
               {status === "sending"
                 ? "SENDING..."
                 : "SEND MESSAGE"}
+
             </span>
+
 
             <span className="send-icon">
-              <ArrowUpRight size={20} />
+
+              <ArrowUpRight
+                size={20}
+              />
+
             </span>
+
           </button>
 
+
           {status === "success" && (
+
             <div className="form-status success">
-              Message sent successfully. I'll get back to you soon.
+
+              Message sent successfully.
+              I'll get back to you soon.
+
             </div>
+
           )}
 
+
           {status === "error" && (
+
             <div className="form-status error">
-              Something went wrong. Please try again.
+
+              Something went wrong.
+              Please try again.
+
             </div>
+
           )}
 
         </form>
 
       </section>
 
-      {/* FOOTER */}
+
       <footer className="contact-footer">
 
         <div>
+
           <Mail size={16} />
-          <span>OPEN FOR COLLABORATION</span>
+
+          <span>
+            OPEN FOR COLLABORATION
+          </span>
+
         </div>
 
-        <span>© 2026 KRITIKA ROKKA</span>
+        <span>
+          © 2026 KRITIKA ROKKA
+        </span>
 
       </footer>
 

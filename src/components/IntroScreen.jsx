@@ -1,16 +1,53 @@
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import {
+  motion,
+} from "framer-motion";
 
-function IntroScreen({ onEnter }) {
+import {
+  ArrowUpRight,
+  Sparkles,
+} from "lucide-react";
+
+
+function IntroScreen({
+  onEnter,
+}) {
+
   return (
-    <div className="intro-screen">
 
-      <div className="intro-noise" />
+    <div
+      className="intro-screen"
+    >
 
-      <div className="intro-orb intro-orb-one" />
-      <div className="intro-orb intro-orb-two" />
+      <div
+        className="intro-noise"
+      />
+
+      <div
+        className="intro-orb intro-orb-one"
+      />
+
+      <div
+        className="intro-orb intro-orb-two"
+      />
 
 
-      <div className="intro-top">
+      <motion.div
+        className="intro-top"
+
+        initial={{
+          opacity: 0,
+          y: -20,
+        }}
+
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+
+        transition={{
+          duration: 0.7,
+        }}
+      >
 
         <span>
           KR / 2026
@@ -20,12 +57,28 @@ function IntroScreen({ onEnter }) {
           PORTFOLIO
         </span>
 
-      </div>
+      </motion.div>
 
 
       <div className="welcome">
 
-        <div className="welcome-small">
+        <motion.div
+          className="welcome-small"
+
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+
+          transition={{
+            delay: 0.2,
+          }}
+        >
 
           <Sparkles size={16} />
 
@@ -33,28 +86,81 @@ function IntroScreen({ onEnter }) {
             WELCOME
           </span>
 
-        </div>
+        </motion.div>
 
 
-        <h1>
+        <motion.h1
+
+          initial={{
+            opacity: 0,
+            scale: 0.8,
+          }}
+
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+
+          transition={{
+            duration: 0.8,
+            delay: 0.15,
+          }}
+        >
           hii<span>.</span>
-        </h1>
+        </motion.h1>
 
 
-        <p>
+        <motion.p
+
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+
+          transition={{
+            delay: 0.45,
+          }}
+        >
           I'm Kritika.
           <br />
-
           A designer figuring out
           <br />
-
           how to make ideas move.
-        </p>
+        </motion.p>
 
 
-        <button
+        <motion.button
+
           className="enter-button"
+
           onClick={onEnter}
+
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+
+          transition={{
+            delay: 0.7,
+          }}
+
+          whileHover={{
+            scale: 1.04,
+          }}
+
+          whileTap={{
+            scale: 0.97,
+          }}
         >
 
           <span>
@@ -62,22 +168,60 @@ function IntroScreen({ onEnter }) {
           </span>
 
           <span className="enter-icon">
-            <ArrowUpRight size={18} />
+
+            <ArrowUpRight
+              size={18}
+            />
+
           </span>
 
-        </button>
+        </motion.button>
 
       </div>
 
 
-      <div className="intro-side-text">
+      <motion.div
+        className="intro-side-text"
+
+        initial={{
+          opacity: 0,
+          x: -20,
+        }}
+
+        animate={{
+          opacity: 1,
+          x: 0,
+        }}
+
+        transition={{
+          delay: 1,
+        }}
+      >
+
         SCROLL IS OVERRATED.
         <br />
         JUST COME IN.
-      </div>
+
+      </motion.div>
 
 
-      <div className="intro-bottom-text">
+      <motion.div
+        className="intro-bottom-text"
+
+        initial={{
+          opacity: 0,
+          y: 20,
+        }}
+
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+
+        transition={{
+          delay: 1,
+        }}
+      >
 
         <span>
           GRAPHIC DESIGN
@@ -91,7 +235,7 @@ function IntroScreen({ onEnter }) {
           FRONTEND
         </span>
 
-      </div>
+      </motion.div>
 
     </div>
   );

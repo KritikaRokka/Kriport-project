@@ -1,399 +1,493 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  motion,
+} from "framer-motion";
+
 import {
   ArrowDown,
   ArrowUpRight,
-  Menu,
-  X,
-  Plus,
-  Sparkles,
 } from "lucide-react";
+
+import {
+  useLocation,
+} from "react-router-dom";
 
 import "./App.css";
 
-import IntroScreen from "./components/IntroScreen";
-import FloatingNav from "./components/FloatingNav";
-import CustomCursor from "./components/CustomCursor";
-import ProjectCard from "./components/ProjectCard";
+import IntroScreen
+  from "./components/IntroScreen";
+
+import FloatingNav
+  from "./components/FloatingNav";
+
+import CustomCursor
+  from "./components/CustomCursor";
+
+import WorkCarousel
+  from "./components/WorkCarousel";
 
 
 function App() {
+
   const location = useLocation();
 
-  const [entered, setEntered] = useState(
-    location.state?.skipIntro === true
-  );
+  const [entered, setEntered] =
+    useState(
+      location.state?.skipIntro === true
+    );
+
 
   useEffect(() => {
-    document.body.style.overflow = entered ? "auto" : "hidden";
+
+    if (
+      location.state?.skipIntro
+    ) {
+      setEntered(true);
+    }
+
+  }, [location.state]);
+
+
+  useEffect(() => {
+
+    document.body.style.overflow =
+      entered
+        ? "auto"
+        : "hidden";
 
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow =
+        "auto";
     };
+
   }, [entered]);
 
-  const enterSite = () => {
-    setEntered(true);
 
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "instant",
-      });
-    }, 50);
-  };
+  useEffect(() => {
+
+    if (
+      entered &&
+      location.state?.scrollTo
+    ) {
+
+      setTimeout(() => {
+
+        document
+          .getElementById(
+            location.state.scrollTo
+          )
+          ?.scrollIntoView({
+            behavior: "smooth",
+          });
+
+      }, 150);
+
+    }
+
+  }, [
+    entered,
+    location.state,
+  ]);
+
 
   if (!entered) {
-    return <IntroScreen onEnter={enterSite} />;
+
+    return (
+      <IntroScreen
+        onEnter={() =>
+          setEntered(true)
+        }
+      />
+    );
+
   }
 
+
   return (
-    <div className="portfolio">
+    <>
 
       <CustomCursor />
 
       <FloatingNav />
 
-      {/* =====================================
-          BACKGROUND
-      ===================================== */}
-
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
-      <div className="ambient ambient-three" />
 
       <div className="grain" />
 
-      {/* =====================================
-          MAIN INTRO
-      ===================================== */}
 
       <main>
 
-        <section className="main-intro" id="home">
+        {/* =========================
+            HERO
+        ========================= */}
 
-          <div className="intro-meta">
-            <span>PORTFOLIO / 2026</span>
+        <section
+          id="home"
+          className="hero-section"
+        >
+
+          <motion.div
+            className="hero-top-meta"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.4,
+              duration: 0.7,
+            }}
+          >
 
             <span>
-              BHaktapur — NEPAL
+              KATHMANDU, NEPAL
             </span>
-          </div>
+
+            <span>
+              AVAILABLE FOR CREATIVE WORK
+            </span>
+
+          </motion.div>
 
 
-          <div className="intro-content">
+          {/* PHOTO */}
 
-            <div className="intro-small">
-              <span className="live-dot" />
-              OPEN TO CREATIVE WORK
-            </div>
+          <motion.div
+            className="hero-photo-wrap"
 
+            initial={{
+              opacity: 0,
+              scale: 0.8,
+              y: 30,
+            }}
 
-            <h1>
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+            }}
 
-              <span className="title-line">
-                DESIGNER
-              </span>
+            transition={{
+              duration: 1,
+              delay: 0.25,
+              ease: [
+                0.22,
+                1,
+                0.36,
+                1,
+              ],
+            }}
+          >
 
-              <span className="title-line outline">
-                &amp;
-              </span>
+            <div className="hero-photo">
 
-              <span className="title-line">
-                CREATOR.
-              </span>
+              <div className="photo-placeholder">
 
-            </h1>
+                <div className="photo-placeholder-inner">
 
+                  <span>
+                    YOUR
+                  </span>
 
-            <div className="intro-description">
+                  <strong>
+                    PHOTO
+                  </strong>
 
-              <p>
-                I'm Kritika Rokka — a graphic designer,
-                UI/UX designer and frontend developer
-                in the making.
-              </p>
+                  <small>
+                    4 : 5
+                  </small>
 
-              <div className="scroll-indicator">
-
-                <span>SCROLL</span>
-
-                <ArrowDown size={15} />
+                </div>
 
               </div>
 
             </div>
 
+            <div className="photo-caption">
+              KRITIKA ROKKA
+            </div>
+
+          </motion.div>
+
+
+          {/* HERO TITLE */}
+
+          <div className="hero-title-wrap">
+
+            <motion.div
+              className="hero-side-note"
+              initial={{
+                opacity: 0,
+                x: -20,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                delay: 0.8,
+              }}
+            >
+              DESIGN / CODE / CREATE
+            </motion.div>
+
+
+            <motion.h1
+              initial={{
+                opacity: 0,
+                y: 80,
+              }}
+
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+
+              transition={{
+                duration: 1,
+                delay: 0.45,
+                ease: [
+                  0.22,
+                  1,
+                  0.36,
+                  1,
+                ],
+              }}
+            >
+              Kritika
+              <span>.</span>
+            </motion.h1>
+
+
+            <motion.div
+              className="hero-description"
+              initial={{
+                opacity: 0,
+                y: 25,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                delay: 0.9,
+              }}
+            >
+              I'm Kritika Rokka —
+              a graphic designer,
+              UI/UX designer and
+              frontend developer
+              in the making.
+            </motion.div>
+
           </div>
 
 
-          <div className="intro-floating floating-one">
-            <span>01</span>
-            <strong>UI / UX</strong>
-          </div>
+          {/* FLOATING TAGS */}
+
+          <motion.div
+            className="hero-floating-tag tag-one"
+            initial={{
+              opacity: 0,
+              scale: 0,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            transition={{
+              delay: 1,
+              duration: 0.5,
+            }}
+          >
+            UI / UX
+          </motion.div>
 
 
-          <div className="intro-floating floating-two">
-            <span>02</span>
-            <strong>GRAPHIC</strong>
-          </div>
+          <motion.div
+            className="hero-floating-tag tag-two"
+            initial={{
+              opacity: 0,
+              scale: 0,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            transition={{
+              delay: 1.1,
+              duration: 0.5,
+            }}
+          >
+            GRAPHIC
+          </motion.div>
 
 
-          <div className="intro-floating floating-three">
-            <span>03</span>
-            <strong>FRONTEND</strong>
-          </div>
+          <motion.div
+            className="hero-floating-tag tag-three"
+            initial={{
+              opacity: 0,
+              scale: 0,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            transition={{
+              delay: 1.2,
+              duration: 0.5,
+            }}
+          >
+            FRONTEND
+          </motion.div>
 
 
-          <div className="intro-bottom">
+          <motion.div
+            className="hero-scroll"
+            animate={{
+              y: [0, 8, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+            }}
+          >
+
+            <ArrowDown size={15} />
 
             <span>
-              SELECTED WORK ↓
+              SCROLL
             </span>
 
-            <span>
-              K.R. / 01
-            </span>
-
-          </div>
+          </motion.div>
 
         </section>
 
 
-        {/* =====================================
-            SELECTED WORK
-        ===================================== */}
+        {/* =========================
+            WORK
+        ========================= */}
 
-        <section className="work-section" id="work">
+        <WorkCarousel />
 
-          <div className="section-heading">
 
-            <div>
-              <span className="section-number">
-                01
-              </span>
+        {/* =========================
+            ABOUT
+        ========================= */}
 
-              <span className="section-label">
-                SELECTED WORK
-              </span>
-            </div>
+        <section
+          id="about"
+          className="content-section"
+        >
+
+          <span className="section-index">
+            03 / ABOUT
+          </span>
+
+          <h2>
+            Designing things
+            <br />
+            that feel
+            <em> human.</em>
+          </h2>
+
+          <div className="about-content">
 
             <p>
-              A collection of interfaces,
-              interactive experiences and
-              visual work.
+              I enjoy working between design
+              and technology — turning ideas
+              into visual experiences, interfaces
+              and interactive products.
+            </p>
+
+            <p>
+              My work moves between UI/UX,
+              graphic design, Unity and frontend
+              development.
             </p>
 
           </div>
 
-
-          <div className="projects">
-
-            <ProjectCard
-              number="01"
-              title="School Enterprise Project"
-              category="UI/UX · EDUCATION · UNITY"
-              description="An educational management experience designed around students, teachers and administrators."
-              image="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1600&q=85"
-              large
-            />
-
-
-            <ProjectCard
-              number="02"
-              title="Pair Buzz"
-              category="GAME · UI/UX · UNITY"
-              description="A two-player mobile game bundle built around competitive interaction and touch-friendly interfaces."
-              image="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=85"
-            />
-
-
-            <ProjectCard
-              number="03"
-              title="CK Application"
-              category="EDUCATION · INTERACTION"
-              description="Interactive educational quizzes designed to make learning feel playful and approachable."
-              image="https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1600&q=85"
-            />
-
-
-            <ProjectCard
-              number="04"
-              title="Visual & Brand Work"
-              category="GRAPHIC DESIGN · BRANDING"
-              description="Branding, brochures, digital artwork and promotional visuals created for different projects."
-              image="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1600&q=85"
-            />
-
-          </div>
-
         </section>
 
 
-        {/* =====================================
-            ABOUT
-        ===================================== */}
-
-        <section className="about-section" id="about">
-
-          <div className="section-heading">
-
-            <div>
-              <span className="section-number">
-                02
-              </span>
-
-              <span className="section-label">
-                A LITTLE ABOUT ME
-              </span>
-            </div>
-
-          </div>
-
-
-          <div className="about-layout">
-
-            <div className="about-big-text">
-
-              <span>
-                I LIKE MAKING
-              </span>
-
-              <span className="italic">
-                THINGS
-              </span>
-
-              <span>
-                FEEL RIGHT.
-              </span>
-
-            </div>
-
-
-            <div className="about-copy">
-
-              <p>
-                I come from a design background,
-                but I'm increasingly interested in
-                what happens after the design is
-                finished.
-              </p>
-
-              <p>
-                That's what pulled me toward
-                frontend development — turning
-                visual ideas into things people can
-                actually interact with.
-              </p>
-
-              <div className="about-signature">
-                K / R
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        {/* =====================================
+        {/* =========================
             SKILLS
-        ===================================== */}
-
-        <section className="skills-section">
-
-          <div className="section-heading">
-
-            <div>
-              <span className="section-number">
-                03
-              </span>
-
-              <span className="section-label">
-                THINGS I WORK WITH
-              </span>
-            </div>
-
-          </div>
-
-
-          <div className="skills-cloud">
-
-            <span className="skill skill-large">
-              FIGMA
-            </span>
-
-            <span className="skill">
-              PHOTOSHOP
-            </span>
-
-            <span className="skill">
-              FRAMER
-            </span>
-
-            <span className="skill skill-outline">
-              REACT
-            </span>
-
-            <span className="skill">
-              JAVASCRIPT
-            </span>
-
-            <span className="skill skill-large">
-              UI / UX
-            </span>
-
-            <span className="skill">
-              UNITY
-            </span>
-
-            <span className="skill skill-outline">
-              BRANDING
-            </span>
-
-            <span className="skill">
-              PROTOTYPING
-            </span>
-
-            <span className="skill">
-              GRAPHIC DESIGN
-            </span>
-
-          </div>
-
-        </section>
-
-
-        {/* =====================================
-            EXPERIENCE
-        ===================================== */}
+        ========================= */}
 
         <section
-          className="experience-section"
-          id="experience"
+          id="skills"
+          className="skills-section"
         >
 
-          <div className="section-heading">
+          <div className="section-index">
+            04 / SKILLS
+          </div>
 
-            <div>
-              <span className="section-number">
-                04
-              </span>
+          <div className="skills-list">
 
-              <span className="section-label">
-                EXPERIENCE
-              </span>
+            <div className="skill">
+              <span>01</span>
+              <strong>UI / UX DESIGN</strong>
+            </div>
+
+            <div className="skill">
+              <span>02</span>
+              <strong>GRAPHIC DESIGN</strong>
+            </div>
+
+            <div className="skill">
+              <span>03</span>
+              <strong>FRONTEND DEVELOPMENT</strong>
+            </div>
+
+            <div className="skill">
+              <span>04</span>
+              <strong>UNITY</strong>
+            </div>
+
+            <div className="skill">
+              <span>05</span>
+              <strong>BRANDING</strong>
+            </div>
+
+            <div className="skill">
+              <span>06</span>
+              <strong>PROTOTYPING</strong>
             </div>
 
           </div>
 
+        </section>
+
+
+        {/* =========================
+            EXPERIENCE
+        ========================= */}
+
+        <section
+          id="experience"
+          className="experience-section"
+        >
+
+          <div className="section-index">
+            05 / EXPERIENCE
+          </div>
 
           <div className="experience-list">
 
-            <div className="experience-row">
+            <div className="experience-item">
 
-              <span className="experience-year">
+              <span>
                 2026 — NOW
               </span>
 
@@ -407,14 +501,12 @@ function App() {
                 </p>
               </div>
 
-              <ArrowUpRight />
-
             </div>
 
 
-            <div className="experience-row">
+            <div className="experience-item">
 
-              <span className="experience-year">
+              <span>
                 2025 — NOW
               </span>
 
@@ -424,18 +516,16 @@ function App() {
                 </h3>
 
                 <p>
-                  UI / UX Designer
+                  UI/UX Designer
                 </p>
               </div>
-
-              <ArrowUpRight />
 
             </div>
 
 
-            <div className="experience-row">
+            <div className="experience-item">
 
-              <span className="experience-year">
+              <span>
                 2025
               </span>
 
@@ -445,18 +535,16 @@ function App() {
                 </h3>
 
                 <p>
-                  Developer &amp; UI/UX Designer
+                  Developer & UI/UX Designer
                 </p>
               </div>
-
-              <ArrowUpRight />
 
             </div>
 
 
-            <div className="experience-row">
+            <div className="experience-item">
 
-              <span className="experience-year">
+              <span>
                 2025
               </span>
 
@@ -466,11 +554,9 @@ function App() {
                 </h3>
 
                 <p>
-                  Freelance UI / UX Designer
+                  Freelance UI/UX Designer
                 </p>
               </div>
-
-              <ArrowUpRight />
 
             </div>
 
@@ -479,57 +565,43 @@ function App() {
         </section>
 
 
-        {/* =====================================
-            CONTACT
-        ===================================== */}
+        {/* =========================
+            FOOTER CTA
+        ========================= */}
 
-        <section className="contact-section" id="contact">
+        <section
+          className="final-cta"
+        >
 
-          {/* <Sparkles className="contact-sparkle" /> */}
-
-          <span className="contact-small">
-            HAVE A PROJECT IN MIND?
+          <span>
+            HAVE SOMETHING IN MIND?
           </span>
 
           <h2>
-            LET'S MAKE
+            Let's make
             <br />
-            SOMETHING.
+            something
+            <em> happen.</em>
           </h2>
 
-          <button className="contact-button" onClick={()=>{
-            window.location.href = "/contact"; // Redirect to the contact page
-            
-          }}>
+          <button
+            onClick={() =>
+              window.location.href =
+                "/contact"
+            }
+          >
 
-            <span>
-              GET IN TOUCH
-            </span>
+            GET IN TOUCH
 
-            <span className="contact-arrow">
-              <ArrowUpRight size={20} />
-            </span>
+            <ArrowUpRight size={20} />
 
           </button>
-
-
-          <div className="contact-footer">
-
-            <span>
-              KRITIKA ROKKA
-            </span>
-
-            <span>
-              © 2026
-            </span>
-
-          </div>
 
         </section>
 
       </main>
 
-    </div>
+    </>
   );
 }
 
