@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 import {
   ArrowLeft,
@@ -16,6 +17,7 @@ function Contact() {
   });
 
   const [status, setStatus] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setFormData({
@@ -60,10 +62,24 @@ function Contact() {
     <main className="contact-page">
 
       {/* BACK BUTTON */}
-      <button
+      {/* <button
         className="contact-back"
         onClick={() => window.history.back()}
       >
+        <ArrowLeft size={18} />
+        <span>BACK</span>
+      </button> */}
+
+      <button
+        className="contact-back"
+        onClick={() =>
+        navigate("/", {
+        state: {
+        skipIntro: true,
+        },
+        })
+        }
+        >
         <ArrowLeft size={18} />
         <span>BACK</span>
       </button>
