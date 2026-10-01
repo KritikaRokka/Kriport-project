@@ -25,7 +25,7 @@ function IntroScreen({ onEnter }) {
 
       <div className="welcome">
 
-        <div className="welcome-small">
+        {/* <div className="welcome-small">
 
           <Sparkles size={16} />
 
@@ -33,11 +33,11 @@ function IntroScreen({ onEnter }) {
             WELCOME
           </span>
 
-        </div>
+        </div> */}
 
 
         <h1>
-          hii<span>.</span>
+          नमस्ते<span>.</span>
         </h1>
 
 
